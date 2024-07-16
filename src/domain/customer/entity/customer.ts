@@ -2,21 +2,21 @@ import Address from "../valueObject/address";
 
 export default class Customer {
     
-    _id: string;
-    _name: string;
-    _address: Address;
-    _active: boolean;
+    private _id: string;
+    private _name: string;
+    private _address?: Address;
+    private _active: boolean;
 
     constructor(
         id: string,
         name: string,
-        address: Address,
-        active: boolean
+        active: boolean,
+        address?: Address,
     ) {
         this._id = id;
         this._name = name;
-        this._address = address;
         this._active = active;
+        this._address = address;
 
         this.validate();
     }
@@ -35,6 +35,18 @@ export default class Customer {
 
     get id(): string {
         return this._id;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    get isActive(): boolean {
+        return this._active;
+    }
+
+    get address(): Address|undefined {
+        return this._address;
     }
 
     changeName(name: string) {
