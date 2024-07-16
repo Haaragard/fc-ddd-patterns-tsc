@@ -1,4 +1,4 @@
-import Address from "./valueObject/address";
+import Address from "../valueObject/address";
 
 export default class Customer {
     
