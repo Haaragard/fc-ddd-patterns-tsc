@@ -5,7 +5,7 @@ describe("Address unit tests.", () => {
 
     it("Should throw an error when street is empty", () => {
         expect(() => {
-            let address = AddressFixture.create({
+            AddressFixture.create({
                 street: "",
             });
         }).toThrow("Street is required.");
@@ -13,7 +13,7 @@ describe("Address unit tests.", () => {
 
     it("Should throw an error when number is below or equals zero", () => {
         expect(() => {
-            let address = AddressFixture.create({
+            AddressFixture.create({
                 number: 0,
             });
         }).toThrow("Number is expected to be positive.");
@@ -21,7 +21,7 @@ describe("Address unit tests.", () => {
 
     it("Should throw an error when zip is empty", () => {
         expect(() => {
-            let address = AddressFixture.create({
+            AddressFixture.create({
                 zip: "",
             });
         }).toThrow("Zip is required.");
@@ -29,7 +29,7 @@ describe("Address unit tests.", () => {
 
     it("Should throw an error when city is empty", () => {
         expect(() => {
-            let address = AddressFixture.create({
+            AddressFixture.create({
                 city: "",
             });
         }).toThrow("City is required.");
@@ -41,7 +41,7 @@ describe("Address unit tests.", () => {
         expect(address).toBeInstanceOf(Address);
     });
 
-    it("Should throw an Error when ", () => {
+    it("Should return address as string", () => {
         let street = "Street Name";
         let number = 123;
         let zip = "123123-123123";
