@@ -56,4 +56,36 @@ describe("Address unit tests.", () => {
 
         expect(address.toString()).toBe(`${street}, ${number}, ${zip}, ${city}`);
     });
+
+    it("Should retrieve a street from an address", () => {
+        let address = AddressFixture.create({
+            street: "Street Name",
+        });
+
+        expect(address.street).toBe("Street Name");
+    });
+
+    it("Should retrieve a number from an address", () => {
+        let address = AddressFixture.create({
+            number: 123,
+        });
+
+        expect(address.number).toBe(123);
+    });
+
+    it("Should retrieve a zip from an address", () => {
+        let address = AddressFixture.create({
+            zip: "123-123-123",
+        });
+
+        expect(address.zip).toBe("123-123-123");
+    });
+
+    it("Should retrieve a city from an address", () => {
+        let address = AddressFixture.create({
+            city: "City Name",
+        });
+
+        expect(address.city).toBe("City Name");
+    });
 });
