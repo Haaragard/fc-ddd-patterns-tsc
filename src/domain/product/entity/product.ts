@@ -35,4 +35,8 @@ export default class Product {
             throw new Error("Price price is required to be greater than zero");
         }
     }
+
+    public changePrice(amount: number): void {
+        this._price = amount;
+    }
 }

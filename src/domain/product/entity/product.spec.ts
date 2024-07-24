@@ -56,4 +56,14 @@ describe("Product unit tests", () => {
             });
         }).toThrow("Price price is required to be greater than zero");
     });
+
+    it("Should change price", () => {
+        let product = ProductFixture.create({
+            price: 10
+        });
+
+        product.changePrice(40);
+
+        expect(product.price).toBe(40);
+    });
 });
