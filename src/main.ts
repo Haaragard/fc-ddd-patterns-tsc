@@ -1,6 +1,6 @@
 import Customer from "./domain/customer/entity/customer";
 import Address from "./domain/customer/valueObject/address";
-import OrderItem from "./domain/order/entity/item";
+import OrderItem from "./domain/order/entity/orderItem";
 import Order from "./domain/order/entity/order";
 
 let address = new Address(
@@ -12,20 +12,24 @@ let address = new Address(
 let customer = new Customer(
     "customer-id-123123123",
     "Customer Name",
-    address,
-    false
+    false,
+    address
 );
 customer.activate();
 
 let item1 = new OrderItem(
-    "order-item-id-1-123123123",
+    "order-item-id-1",
+    "product-id-1",
     "Item Name 1",
-    10
+    10,
+    100
 );
 let item2 = new OrderItem(
-    "order-item-id-2-123123123",
+    "order-item-id-2",
+    "product-id-2",
     "Item Name 2",
-    15
+    15,
+    200
 );
 
 let order = new Order(
