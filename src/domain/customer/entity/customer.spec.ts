@@ -83,9 +83,15 @@ describe("Customer unit tests.", () => {
 
     it("Should add reward points for a customer", () => {
         let customer = CustomerFixture.create();
+        
         customer.addRewardPoints(100);
-
         expect(customer.rewardPoints).toBe(100);
+
+        customer.addRewardPoints(100);
+        expect(customer.rewardPoints).toBe(200);
+
+        customer.addRewardPoints(300);
+        expect(customer.rewardPoints).toBe(500);
     });
 
 });
