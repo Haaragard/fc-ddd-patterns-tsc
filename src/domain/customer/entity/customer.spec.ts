@@ -31,6 +31,13 @@ describe("Customer unit tests.", () => {
         }).toThrow("Address is required.");
     });
 
+    it("Should throw error when adding reward points is equals of below zero", () => {
+        expect(() => {
+            let customer = CustomerFixture.create();
+            customer.addRewardPoints(-1)
+        }).toThrow("Given points should be greater than zero.");
+    });
+
     it("Should create a customer successfully", () => {
         let customer = CustomerFixture.create();
 
@@ -52,7 +59,7 @@ describe("Customer unit tests.", () => {
 
         expect(customer.name).toBe("Customer Name");
     });
-    
+
     it("Should retrieve the active status from a customer", () => {
         let customer = CustomerFixture.create({
             active: true,
@@ -60,7 +67,7 @@ describe("Customer unit tests.", () => {
 
         expect(customer.isActive).toBe(true);
     });
-    
+
     it("Should retrieve address from a customer", () => {
         let address = AddressFixture.create({
             street: "Street Name",
@@ -72,6 +79,13 @@ describe("Customer unit tests.", () => {
 
         expect(customer.address).toBeInstanceOf(Address);
         expect(customer.address?.street).toBe("Street Name");
+    });
+
+    it("Should add reward points for a customer", () => {
+        let customer = CustomerFixture.create();
+        customer.addRewardPoints(100);
+
+        expect(customer.rewardPoints).toBe(100);
     });
 
 });

@@ -6,6 +6,7 @@ export default class Customer {
     private _name: string;
     private _address?: Address;
     private _active: boolean;
+    private _rewardPoints: number = 0;
 
     constructor(
         id: string,
@@ -49,6 +50,10 @@ export default class Customer {
         return this._address;
     }
 
+    get rewardPoints(): number {
+        return this._rewardPoints;
+    }
+
     changeName(name: string) {
         this._name = name;
         this.validate();
@@ -65,5 +70,12 @@ export default class Customer {
 
     deactivate() {
         this._active = false;
+    }
+
+    addRewardPoints(points: number): void {
+        if (points <= 0) {
+            throw new Error("Given points should be greater than zero.");
+        }
+        this._rewardPoints += points;
     }
 }
