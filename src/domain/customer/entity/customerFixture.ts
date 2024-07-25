@@ -1,5 +1,6 @@
 import AddressFixture from "../valueObject/addressFixture";
 import Customer from "./customer";
+import {v4 as uuid} from "uuid";
 
 export default class CustomerFixture {
     public static create(parameters?: Object): Customer {
@@ -8,7 +9,7 @@ export default class CustomerFixture {
             : AddressFixture.create();
 
         return new Customer(
-            parameters?.hasOwnProperty("id") ? parameters.id : "123",
+            parameters?.hasOwnProperty("id") ? parameters.id : uuid(),
             parameters?.hasOwnProperty("name") ? parameters.name : "Customer name",
             parameters?.hasOwnProperty("active") ? parameters.active : false,
             address
