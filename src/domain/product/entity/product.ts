@@ -36,7 +36,19 @@ export default class Product {
         }
     }
 
+    public changeName(name: string): void {
+        if (name.length === 0) {
+            throw Error("New name can't be empty");
+        }
+
+        this._name = name;
+    }
+
     public changePrice(amount: number): void {
+        if (amount <= 0) {
+            throw Error("New amount should be greater than zero");
+        }
+
         this._price = amount;
     }
 }
