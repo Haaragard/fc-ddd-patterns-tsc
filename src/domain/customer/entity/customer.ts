@@ -54,6 +54,14 @@ export default class Customer {
         return this._rewardPoints;
     }
 
+    set rewardPoints(amount: number) {
+        if (this.rewardPoints < 0) {
+            throw Error("Settled reward points should be greater or equals zero");
+        }
+
+        this._rewardPoints = amount;
+    }
+
     changeName(name: string) {
         this._name = name;
         this.validate();

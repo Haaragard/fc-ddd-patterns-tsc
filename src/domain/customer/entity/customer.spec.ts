@@ -81,6 +81,28 @@ describe("Customer unit tests.", () => {
         expect(customer.address?.street).toBe("Street Name");
     });
 
+    it("Should set reward points for a customer", () => {
+        let customer = CustomerFixture.create();
+        
+        customer.rewardPoints = 100;
+        expect(customer.rewardPoints).toBe(100);
+
+        customer.rewardPoints = 300;
+        expect(customer.rewardPoints).toBe(300);
+
+        customer.rewardPoints = 600;
+        expect(customer.rewardPoints).toBe(600);
+    });
+
+    it("Should throw error when setting reward points below zero for a customer", () => {
+        let customer = CustomerFixture.create();
+        
+        customer.rewardPoints = -1;
+        expect(() => {
+            customer.rewardPoints = -1;
+        }).toThrow("Settled reward points should be greater or equals zero");
+    });
+
     it("Should add reward points for a customer", () => {
         let customer = CustomerFixture.create();
         
