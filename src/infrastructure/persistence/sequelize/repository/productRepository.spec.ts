@@ -8,6 +8,7 @@ import Product from "../../../../domain/product/entity/product";
 describe("Product repository tests", () => {
 
     let sequelize: Sequelize;
+    let productRepository: ProductRepository;
 
     beforeEach(async () => {
         sequelize = new Sequelize({
@@ -19,6 +20,8 @@ describe("Product repository tests", () => {
 
         sequelize.addModels([ProductModel])
         await sequelize.sync();
+
+        productRepository = new ProductRepository();
     });
 
     afterEach(async () => {
