@@ -35,6 +35,14 @@ export default class OrderItem {
         return this._price;
     }
 
+    changeQuantity(amount: number): void {
+        if (amount < 0) {
+            throw new Error("New quantity amount can not less than zero.");
+        }
+
+        this._quantity = amount;
+    }
+
     private validate() {
         if (this._id.length === 0) {
             throw new Error("Id is required.");

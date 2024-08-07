@@ -41,12 +41,22 @@ describe("Order Items unit tests", () => {
         expect(orderItem.quantity).toBe(5);
     });
 
-    it("Should retrieve quantity successfully", () => {
+    it("Should retrieve price successfully", () => {
         let orderItem = OrderItemFixture.create({
             price: 100,
         });
 
         expect(orderItem.price).toBe(100);
+    });
+
+    it("Should change quantity successfully", () => {
+        let orderItem = OrderItemFixture.create({
+            price: 100,
+        });
+
+        orderItem.changeQuantity(300);
+
+        expect(orderItem.quantity).toBe(300);
     });
 
     it("Should throw an error when id is empty", () => {
@@ -81,12 +91,22 @@ describe("Order Items unit tests", () => {
         }).toThrow("Quantity should be greater than zero.");
     });
 
-    it("Should throw an error when quantity is less or equals zero", () => {
+    it("Should throw an error when price is less or equals zero", () => {
         expect(() => {
             OrderItemFixture.create({
                 price: 0,
             });
         }).toThrow("Price should be greater than zero.");
+    });
+
+    it("Should throw an error when changing quantity is less or equals zero", () => {
+        let orderItem = OrderItemFixture.create({
+            quantity: 10,
+        });
+
+        expect(() => {
+            orderItem.changeQuantity(-1);
+        }).toThrow("New quantity amount can not less than zero.");
     });
 
 });
