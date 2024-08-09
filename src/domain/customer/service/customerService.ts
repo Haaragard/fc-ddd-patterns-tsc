@@ -5,6 +5,8 @@ import Customer from "../entity/customer";
 import CustomerRepositoryInterface from "../repository/customerRepositoryInterface";
 import Address from "../valueObject/address";
 import CustomerCreatedEvent from "../event/customerCreatedEvent";
+import ChangeAddressDto from "../dto/changeAddressDto";
+import CustomerAddressChangedEvent from "../event/customerAddressChangesEvent";
 
 export default class CustomerService {
     protected repository: CustomerRepositoryInterface;
@@ -20,13 +22,13 @@ export default class CustomerService {
     }
 
     public create(dto: CreateCustomerDTO): Customer {
-        let address = new Address(
+        let address: Address = new Address(
             dto.street,
             dto.number,
             dto.zip,
             dto.city
         );
-        let customer = new Customer(
+        let customer: Customer = new Customer(
             uuid(),
             dto.name,
             dto.active,
@@ -42,6 +44,26 @@ export default class CustomerService {
             })
         );
 
+
+        return customer;
+    }
+
+    public changeAddress(customer: Customer, dto: ChangeAddressDto): Customer {
+        let newAddress: Address = new Address(
+            dto.street,
+            dto.number,
+            dto.zip,
+            dto.city
+        );
+        customer.changeAddress(newAddress);
+
+        this.repository.update(customer);
+
+        this.eventDispatcher.notify(new CustomerAddressChangedEvent({
+            id: customer.id,
+            name: customer.name,
+            address: customer.address
+        }));
 
         return customer;
     }
