@@ -1,5 +1,4 @@
 export default class CreateCustomerDTO {
-    id: string;
     name: string;
     active: boolean = false;
     street: string;
@@ -8,7 +7,6 @@ export default class CreateCustomerDTO {
     city: string;
 
     constructor(
-        id: string,
         name: string,
         active: boolean,
         street: string,
@@ -16,9 +14,8 @@ export default class CreateCustomerDTO {
         zip: string,
         city: string
     ) {
-        this.id = id;
         this.name = name;
-        this.active = active
+        this.active = active;
         this.street = street;
         this.number = number;
         this.zip = zip;
