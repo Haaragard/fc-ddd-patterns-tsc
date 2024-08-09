@@ -1,6 +1,11 @@
 import EventDispatcherInterface from "../../shared/event/eventDispatcherInterface";
+import ChangeAddressDto from "../dto/changeAddressDto";
 import CreateCustomerDTO from "../dto/createCustomerDto";
+import Customer from "../entity/customer";
+import CustomerFixture from "../entity/customerFixture";
+import CustomerAddressChangedEvent from "../event/customerAddressChangesEvent";
 import CustomerRepositoryInterface from "../repository/customerRepositoryInterface";
+import Address from "../valueObject/address";
 import CustomerService from "./customerService";
 
 
@@ -55,4 +60,27 @@ describe("Customer Service unit tests", () => {
         expect(customer.address.city).toStrictEqual(createCustomerDto.city);
     });
 
+    it("Should change a costumer address", () => {
+        let customer: Customer = CustomerFixture.create();
+        let changeAddressDto = new ChangeAddressDto(
+            "Street name new",
+            12344,
+            "zip code new",
+            "City new"
+        );
+
+        customer = service.changeAddress(customer, changeAddressDto);
+
+        expect(mockRepository.update).toHaveBeenCalledWith(customer);
+        expect(mockEventDispatcher.notify).toHaveBeenCalledWith(new CustomerAddressChangedEvent({
+            id: customer.id,
+            name: customer.name,
+            address: customer.address
+        }));
+
+        expect(customer.address.street).toStrictEqual(changeAddressDto.street);
+        expect(customer.address.number).toStrictEqual(changeAddressDto.number);
+        expect(customer.address.zip).toStrictEqual(changeAddressDto.zip);
+        expect(customer.address.city).toStrictEqual(changeAddressDto.city);
+    });
 });
