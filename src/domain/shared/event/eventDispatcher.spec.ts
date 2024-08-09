@@ -1,6 +1,9 @@
+import CustomerAddressChangedEvent from "../../customer/event/customerAddressChangesEvent";
 import CustomerCreatedEvent from "../../customer/event/customerCreatedEvent";
 import EnviaConsoleLog1Handler from "../../customer/event/handler/enviaConsoleLog1Handler";
 import EnviaConsoleLog2Handler from "../../customer/event/handler/enviaConsoleLog2Handler";
+import EnviaConsoleLogHandler from "../../customer/event/handler/enviaConsoleLogHandler";
+import Address from "../../customer/valueObject/address";
 import SendEmailWhenproductIsCreatedHandler from "../../product/event/handler/sendEmailWhenProductIsCreatedHandler";
 import ProductCreatedEvent from "../../product/event/productCreatedEvent";
 import EventDispatcher from "./eventDispatcher";
@@ -78,6 +81,21 @@ describe("Domain events tests", () => {
             handlers: [
                 new EnviaConsoleLog1Handler(),
                 new EnviaConsoleLog2Handler(),
+            ],
+        },
+        {
+            event: new CustomerAddressChangedEvent({
+                id: "customer-1",
+                name: "Customer 1",
+                address: new Address(
+                    "New street",
+                    1234,
+                    "new-zip",
+                    "New City"
+                )
+            }),
+            handlers: [
+                new EnviaConsoleLogHandler(),
             ],
         },
     ];
