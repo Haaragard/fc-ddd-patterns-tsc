@@ -1,6 +1,11 @@
+import CustomerCreatedEvent from "../../customer/event/customerCreatedEvent";
+import EnviaConsoleLog1Handler from "../../customer/event/handler/enviaConsoleLog1Handler";
+import EnviaConsoleLog2Handler from "../../customer/event/handler/enviaConsoleLog2Handler";
 import SendEmailWhenproductIsCreatedHandler from "../../product/event/handler/sendEmailWhenProductIsCreatedHandler";
 import ProductCreatedEvent from "../../product/event/productCreatedEvent";
 import EventDispatcher from "./eventDispatcher";
+import EventHandlerInterface from "./eventHandlerInterface";
+import EventInterface from "./eventInterface";
 
 describe("Domain events tests", () => {
 
@@ -50,21 +55,49 @@ describe("Domain events tests", () => {
         ).toBeUndefined();
     });
 
-    it("Should notify an event", () => {
+    class EventNotificationDataProvider {
+        event: EventInterface;
+        handlers: EventHandlerInterface[];
+    }
+
+    let eventNotificationDataProvider: EventNotificationDataProvider[] = [
+        {
+            event: new ProductCreatedEvent({
+                name: "Product 1",
+                description: "Product 1 description",
+                price: 10,
+            }),
+            handlers: [
+                new SendEmailWhenproductIsCreatedHandler(),
+            ],
+        },
+        {
+            event: new CustomerCreatedEvent({
+                name: "Customer 1",
+            }),
+            handlers: [
+                new EnviaConsoleLog1Handler(),
+                new EnviaConsoleLog2Handler(),
+            ],
+        },
+    ];
+
+    it.each(eventNotificationDataProvider)(`Should notify an event`, (dataProvider) => {
         let eventDispatcher = new EventDispatcher();
-        let productCreatedEvent = new ProductCreatedEvent({
-            name: "Product 1",
-            description: "Product 1 description",
-            price: 10,
+        let event = dataProvider.event;
+        let eventHandlerSpies = dataProvider.handlers.map(
+            (handler: EventHandlerInterface) => jest.spyOn(handler, "handle")
+        );
+
+        dataProvider.handlers.forEach((handler: EventHandlerInterface) => {
+            eventDispatcher.register(event.eventName, handler);
         });
-        let eventHandler = new SendEmailWhenproductIsCreatedHandler();
-        let spyEventHandler = jest.spyOn(eventHandler, "handle");
 
-        eventDispatcher.register("ProductCreatedEvent", eventHandler);
+        eventDispatcher.notify(event);
 
-        eventDispatcher.notify(productCreatedEvent);
-
-        expect(spyEventHandler).toHaveBeenCalledWith(productCreatedEvent);
+        eventHandlerSpies.forEach((spy) => {
+            expect(spy).toHaveBeenCalledWith(event);
+        });
     });
 
 });
